@@ -118,29 +118,26 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await message.reply_text(f"⚠️ Auto-post failed. Make sure bot is admin in channel.\nError: {e}")
 
 
-def main():
+ def main():
     init_db()
-    print("BOT_TOKEN =", BOT_TOKEN)
 
-if not BOT_TOKEN:
-    raise RuntimeError("BOT_TOKEN is missing. Add it in .env file.")
+    if not BOT_TOKEN:
+        raise RuntimeError("BOT_TOKEN is missing")
+
     app = Application.builder().token(BOT_TOKEN).build()
+
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("set_tag", set_tag_cmd))
     app.add_handler(CommandHandler("autopost", autopost))
     app.add_handler(CommandHandler("set_channel", set_channel_cmd))
     app.add_handler(CommandHandler("help", help_cmd))
+
     app.add_handler(MessageHandler(filters.TEXT | filters.Caption, handle_message))
 
     print("Bot running...")
     app.run_polling()
 
 
-import traceback
-
 if __name__ == "__main__":
-    try:
-        main()
-    except Exception:
-        traceback.print_exc()
+    main()
