@@ -116,14 +116,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await context.bot.send_message(chat_id=channel_id, text=caption, parse_mode="HTML")
         except Exception as e:
             await message.reply_text(f"⚠️ Auto-post failed. Make sure bot is admin in channel.\nError: {e}")
-
-
  def main():
     init_db()
 
     if not BOT_TOKEN:
         raise RuntimeError("BOT_TOKEN is missing")
-
     app = Application.builder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
