@@ -120,9 +120,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     init_db()
-    if not BOT_TOKEN:
-        raise RuntimeError("BOT_TOKEN is missing. Add it in .env file.")
+    print("BOT_TOKEN =", BOT_TOKEN)
 
+if not BOT_TOKEN:
+    raise RuntimeError("BOT_TOKEN is missing. Add it in .env file.")
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("stats", stats))
